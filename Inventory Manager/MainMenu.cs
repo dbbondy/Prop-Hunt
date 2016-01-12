@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Inventory_Manager
 {
-    public partial class Form1 : Form
+    public partial class MainMenu : Form
     {
-        public Form1()
+        public MainMenu()
         {
             InitializeComponent();
         }
@@ -20,6 +20,16 @@ namespace Inventory_Manager
         private void button1_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OnExitClick(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
