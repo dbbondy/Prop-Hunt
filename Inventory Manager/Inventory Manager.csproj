@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Prefix.cs" />
     <Compile Include="Forms\ConfigurePrefixForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +85,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\PrefixRepository.cs" />
+    <Compile Include="Utility\DbCreateUtil.cs" />
     <EmbeddedResource Include="Forms\ConfigurePrefixForm.resx">
       <DependentUpon>ConfigurePrefixForm.cs</DependentUpon>
     </EmbeddedResource>

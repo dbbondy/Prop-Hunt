@@ -16,13 +16,7 @@ namespace Inventory_Manager
         [STAThread]
         static void Main()
         {
-            String filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "InventoryDBExists.file");
-            bool dbExists = File.Exists(filePath);
-            if (!dbExists)
-            {
-                File.Create(filePath);
-                createTables();
-            }
+           //TODO: call dbCreate
            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -31,21 +25,7 @@ namespace Inventory_Manager
 
         static void createTables()
         {
-            //TODO: need to obtain correct table names and schema... test it on H2 before putting it in here.
-            //SQLiteConnection.CreateFile("InventoryDB.sqlite");
-
-            //SQLiteConnection dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
-            //dbConnection.Open();
-
-            //using (var command = new SQLiteCommand(dbConnection))
-            //{
-            //    using (var transaction = dbConnection.BeginTransaction())
-            //    {
-            //        command.CommandText = "CREATE TABLE test2 (test_col1 VARCHAR(25), test_col2 INT)";
-            //        command.ExecuteNonQuery();
-            //        transaction.Commit();
-            //    }
-            //}
+            
 
             
         }
