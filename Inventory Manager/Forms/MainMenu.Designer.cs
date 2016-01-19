@@ -1,4 +1,4 @@
-﻿namespace Inventory_Manager
+﻿namespace Inventory_Manager.Forms
 {
     partial class MainMenu
     {

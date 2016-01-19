@@ -26,11 +26,12 @@ namespace Inventory_Manager
            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainMenu());
+            Application.Run(new Forms.MainMenu());
         }
 
         static void createTables()
         {
+            //TODO: need to obtain correct table names and schema... test it on H2 before putting it in here.
             //SQLiteConnection.CreateFile("InventoryDB.sqlite");
 
             //SQLiteConnection dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");

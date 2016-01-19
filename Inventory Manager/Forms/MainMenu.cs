@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Inventory_Manager
+namespace Inventory_Manager.Forms
 {
     public partial class MainMenu : Form
     {
@@ -24,7 +24,8 @@ namespace Inventory_Manager
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            ConfigurePrefixForm prefixForm = new ConfigurePrefixForm();
+            prefixForm.Show();
         }
 
         private void OnExitClick(object sender, EventArgs e)
