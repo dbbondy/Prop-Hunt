@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Inventory_Manager.Utility;
 
 namespace Inventory_Manager
 {
@@ -11,18 +12,11 @@ namespace Inventory_Manager
         [STAThread]
         static void Main()
         {
-           //TODO: call dbCreate
-           
+            DbCreateUtil.CreateTables();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Forms.MainMenu());
-        }
-
-        static void createTables()
-        {
-            
-
-            
         }
     }
 }

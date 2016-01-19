@@ -1,43 +1,72 @@
 ﻿using System;
+using System.Data.Common;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.IO;
 
 namespace Inventory_Manager.Utility
 {
     static class DbCreateUtil
     {
-        private static readonly string FILE_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "InventoryDBExists.file");
-
-        private static bool dbExists()
-        {
-            bool dbExists = File.Exists(FILE_PATH);
-            return dbExists;
-        }
-
+        #region
         public static void CreateTables()
         {
             // TODO: need to obtain correct table names and schema... test it on H2 before putting it in here.
 
-            if (!dbExists())
+            SQLiteConnection.CreateFile("InventoryDB.sqlite");
+
+            SQLiteConnection dbConnection = new SQLiteConnection("Data Source=InventoryDB.sqlite;Version=3;");
+            dbConnection.Open();
+
+            using (var transaction = dbConnection.BeginTransaction())
             {
-                File.Create(FILE_PATH);
+                #region create prefix table
+                using (var command = new SQLiteCommand(dbConnection))
+                {
+                    command.CommandText = "CREATE TABLE IF NOT EXISTS prefix" + 
+                                            "(prefix_id INTEGER PRIMARY KEY ASC, prefix_name TEXT, prefix_desc TEXT)";
+                    command.ExecuteNonQuery();
+                }
+                #endregion
 
-                SQLiteConnection.CreateFile("InventoryDB.sqlite");
-
-                SQLiteConnection dbConnection = new SQLiteConnection("Data Source=InventoryDB.sqlite;Version=3;");
-                dbConnection.Open();
+                #region insert core prefix data
+                using (var command = new SQLiteCommand(dbConnection))
+                {
+                    command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_name, prefix_desc) VALUES('COS-', 'Costumes')";
+                    command.ExecuteNonQuery();
+                }
 
                 using (var command = new SQLiteCommand(dbConnection))
                 {
-                    using (var transaction = dbConnection.BeginTransaction())
+                    command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_name, prefix_desc) VALUES('PR-', 'Props')";
+                    command.ExecuteNonQuery();
+                }
+                using (var command = new SQLiteCommand(dbConnection))
+                {
+                    command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_name, prefix_desc) VALUES('SP-', 'Set-Pieces')";
+                    command.ExecuteNonQuery();
+                }
+
+                #endregion
+
+                #region verify there are at least 3 rows in the prefix table
+                using (var command = new SQLiteCommand(dbConnection))
+                {
+                    command.CommandText = "SELECT COUNT(*) from prefix";
+                    using (var reader = command.ExecuteReader())
                     {
-                        command.CommandText = "CREATE TABLE test2 (test_col1 VARCHAR(25), test_col2 INT)";
-                        command.ExecuteNonQuery();
-                        transaction.Commit();
+                        while (reader.Read())
+                        {
+                            Debug.Assert(reader.GetInt32(0) < 3, "Missing Inventory Prefixes!"); // if there are not three rows after attempting to create the core data, throw an error to let us know.
+                        }
                     }
                 }
+
+                #endregion
+
+                transaction.Commit();
             }
-           
         }
+        #endregion
     }
 }
