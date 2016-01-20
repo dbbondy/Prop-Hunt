@@ -25,5 +25,14 @@ namespace Inventory_Manager.Forms
 
             #endregion
         }
+
+        private void prefixListbox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            ListBox lbox = (ListBox) sender;
+
+            Prefix selectedPrefix = (Prefix) lbox.SelectedItem;
+
+            DescriptionLabel.Text = selectedPrefix.Description;
+        }
     }
 }
