@@ -1,17 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using Inventory_Manager.Domain;
+using System.Data.SQLite;
+using System.Data.Common;
 
 namespace Inventory_Manager.Repositories
 {
-    class PrefixRepository : IRepository<Domain.Prefix>
+    public class PrefixRepository : IRepository<Domain.Prefix>
     {
+
         IEnumerable<Prefix> IRepository<Prefix>.getList
         {
             get
             {
-                throw new NotImplementedException();
+                using (var dbConnection = new SQLiteConnection("Data Source=InventoryDB.sqlite;Version=3;"))
+                {
+                    dbConnection.Open();
+
+                    using (var transaction = dbConnection.BeginTransaction())
+                    {
+                        using (var command = new SQLiteCommand(dbConnection))
+                        {
+                            command.CommandText = "SELECT * from prefix;";
+                            using (DbDataReader reader = command.ExecuteReader())
+                            {
+                                List<Prefix> prefixes = new List<Prefix>();
+                                while (reader.Read())
+                                {
+                                    Prefix prefix = mapData(reader);
+                                    prefixes.Add(prefix);
+                                }
+                                return prefixes;
+                            }
+                        }
+                    }
+                }
             }
+        }
+
+        private Prefix mapData(DbDataReader reader)
+        {
+            int id = Convert.ToInt32(reader["prefix_id"]);
+            string prefix_name = (string)reader["prefix_name"];
+            string prefix_desc = (string)reader["prefix_desc"];
+
+            Prefix prefix = new Prefix { Id = id, Name = prefix_name, Description = prefix_desc };
+
+            return prefix;
         }
 
         void IRepository<Prefix>.add(Prefix item)
