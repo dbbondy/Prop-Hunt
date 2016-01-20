@@ -17,6 +17,7 @@ namespace Inventory_Manager.Utility
 
             using (var dbConnection = new SQLiteConnection("Data Source=InventoryDB.sqlite;Version=3;"))
             {
+                dbConnection.Open();
                 using (var transaction = dbConnection.BeginTransaction())
                 {
                     #region create prefix table
@@ -56,7 +57,8 @@ namespace Inventory_Manager.Utility
                         {
                             while (reader.Read())
                             {
-                                Debug.Assert(reader.GetInt32(0) < 3, "Missing Inventory Prefixes!"); // if there are not three rows after attempting to create the core data, throw an error to let us know.
+                                int rows = reader.GetInt32(0);
+                                Debug.Assert(rows >= 3, "Missing Inventory Prefixes!"); // if there are not three rows after attempting to create the core data, throw an error to let us know.
                             }
                         }
                     }
@@ -65,6 +67,7 @@ namespace Inventory_Manager.Utility
 
                     transaction.Commit();
                 }
+                dbConnection.Close();
             }
         }
         #endregion
