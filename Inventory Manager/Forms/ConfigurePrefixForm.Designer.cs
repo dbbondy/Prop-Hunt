@@ -30,7 +30,7 @@
         {
             this.prefixListbox = new System.Windows.Forms.ListBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.addBtn = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.DescriptionLabel = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
@@ -48,21 +48,22 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.button1);
+            this.flowLayoutPanel1.Controls.Add(this.addBtn);
             this.flowLayoutPanel1.Controls.Add(this.button2);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(59, 216);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(171, 32);
             this.flowLayoutPanel1.TabIndex = 3;
             // 
-            // button1
+            // addBtn
             // 
-            this.button1.Location = new System.Drawing.Point(3, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = true;
+            this.addBtn.Location = new System.Drawing.Point(3, 3);
+            this.addBtn.Name = "addBtn";
+            this.addBtn.Size = new System.Drawing.Size(75, 23);
+            this.addBtn.TabIndex = 0;
+            this.addBtn.Text = "Add";
+            this.addBtn.UseVisualStyleBackColor = true;
+            this.addBtn.Click += new System.EventHandler(this.addBtn_Click);
             // 
             // button2
             // 
@@ -101,7 +102,7 @@
 
         private System.Windows.Forms.ListBox prefixListbox;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button addBtn;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label DescriptionLabel;
     }

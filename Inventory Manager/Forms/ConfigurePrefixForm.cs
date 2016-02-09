@@ -16,15 +16,19 @@ namespace Inventory_Manager.Forms
 
             repo = new PrefixRepository();
 
-            #region load data
+            loadPrefixes();
+        }
+
+        #region
+        private void loadPrefixes()
+        {
             IEnumerable<Prefix> prefixes = repo.getList;
 
             prefixListbox.DataSource = prefixes;
             prefixListbox.DisplayMember = "Name";
             prefixListbox.ValueMember = "Id";
-
-            #endregion
         }
+        #endregion
 
         private void prefixListbox_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -33,6 +37,17 @@ namespace Inventory_Manager.Forms
             Prefix selectedPrefix = (Prefix) lbox.SelectedItem;
 
             DescriptionLabel.Text = selectedPrefix.Description;
+        }
+
+        private void addBtn_Click(object sender, EventArgs e)
+        {
+            AddPrefixForm form = new AddPrefixForm();
+
+            form.Show();
+
+            //TODO: figure out binding newly added item back to list. 
+            //TODO: maybe using this? https://msdn.microsoft.com/en-us/library/ms366768.aspx
+            //TODO: or this https://msdn.microsoft.com/en-us/library/ms173171.aspx
         }
     }
 }
