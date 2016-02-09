@@ -13,6 +13,7 @@ namespace Inventory_Manager.Repositories
         {
             get
             {
+                // get the connection
                 using (var dbConnection = new SQLiteConnection("Data Source=InventoryDB.sqlite;Version=3;"))
                 {
                     dbConnection.Open();
@@ -24,6 +25,7 @@ namespace Inventory_Manager.Repositories
                             command.CommandText = "SELECT * from prefix;";
                             using (DbDataReader reader = command.ExecuteReader())
                             {
+                                // get all current prefixes in DB and return them.
                                 List<Prefix> prefixes = new List<Prefix>();
                                 while (reader.Read())
                                 {
@@ -40,6 +42,7 @@ namespace Inventory_Manager.Repositories
 
         private Prefix mapData(DbDataReader reader)
         {
+            // map the raw data from DB columns to a meaningful object and return it.
             int id = Convert.ToInt32(reader["prefix_id"]);
             string prefix_name = (string)reader["prefix_name"];
             string prefix_desc = (string)reader["prefix_desc"];
