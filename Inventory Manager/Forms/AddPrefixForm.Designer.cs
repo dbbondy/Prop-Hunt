@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.PrefixTxtBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.DescriptionTxtBox = new System.Windows.Forms.TextBox();
+            this.AddBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -44,12 +44,14 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Prefix:";
             // 
-            // textBox1
+            // PrefixTxtBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(107, 21);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 1;
+            this.PrefixTxtBox.Location = new System.Drawing.Point(107, 21);
+            this.PrefixTxtBox.MaxLength = 4;
+            this.PrefixTxtBox.Name = "PrefixTxtBox";
+            this.PrefixTxtBox.Size = new System.Drawing.Size(64, 20);
+            this.PrefixTxtBox.TabIndex = 1;
+            this.PrefixTxtBox.TextChanged += new System.EventHandler(this.PrefixTxtBox_TextChanged);
             // 
             // label2
             // 
@@ -60,34 +62,37 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Description:";
             // 
-            // textBox2
+            // DescriptionTxtBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(107, 54);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 3;
+            this.DescriptionTxtBox.Location = new System.Drawing.Point(107, 54);
+            this.DescriptionTxtBox.MaxLength = 200;
+            this.DescriptionTxtBox.Name = "DescriptionTxtBox";
+            this.DescriptionTxtBox.Size = new System.Drawing.Size(344, 20);
+            this.DescriptionTxtBox.TabIndex = 3;
+            this.DescriptionTxtBox.TextChanged += new System.EventHandler(this.DescriptionTxtBox_TextChanged);
             // 
-            // button1
+            // AddBtn
             // 
-            this.button1.Location = new System.Drawing.Point(78, 91);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(73, 19);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = true;
+            this.AddBtn.Enabled = false;
+            this.AddBtn.Location = new System.Drawing.Point(217, 90);
+            this.AddBtn.Name = "AddBtn";
+            this.AddBtn.Size = new System.Drawing.Size(75, 23);
+            this.AddBtn.TabIndex = 4;
+            this.AddBtn.Text = "Add";
+            this.AddBtn.UseVisualStyleBackColor = true;
             // 
             // AddPrefixForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(258, 134);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox2);
+            this.ClientSize = new System.Drawing.Size(495, 144);
+            this.Controls.Add(this.AddBtn);
+            this.Controls.Add(this.DescriptionTxtBox);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.PrefixTxtBox);
             this.Controls.Add(this.label1);
             this.Name = "AddPrefixForm";
-            this.Text = "AddPrefixForm";
+            this.Text = "Add Prefix";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -96,9 +101,9 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox PrefixTxtBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox DescriptionTxtBox;
+        private System.Windows.Forms.Button AddBtn;
     }
 }

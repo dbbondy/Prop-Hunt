@@ -19,7 +19,6 @@ namespace Inventory_Manager.Forms
             loadPrefixes();
         }
 
-        #region
         private void loadPrefixes()
         {
             IEnumerable<Prefix> prefixes = repo.getList;
@@ -28,7 +27,6 @@ namespace Inventory_Manager.Forms
             prefixListbox.DisplayMember = "Name";
             prefixListbox.ValueMember = "Id";
         }
-        #endregion
 
         private void prefixListbox_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -43,7 +41,12 @@ namespace Inventory_Manager.Forms
         {
             AddPrefixForm form = new AddPrefixForm();
 
+            Prefix newPrefix = new Prefix();
+            form.NewPrefix = newPrefix;
+
             form.Show();
+
+            
 
             //TODO: figure out binding newly added item back to list. 
             //TODO: maybe using this? https://msdn.microsoft.com/en-us/library/ms366768.aspx
