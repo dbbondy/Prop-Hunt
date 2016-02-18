@@ -13,9 +13,7 @@ namespace Inventory_Manager.Utility
         {
             // TODO: need to obtain correct table names and schema... test it on H2 before putting it in here.
 
-            SQLiteConnection.CreateFile("InventoryDB.sqlite");
-
-            using (var dbConnection = new SQLiteConnection("Data Source=InventoryDB.sqlite;Version=3;"))
+            using (var dbConnection = new SQLiteConnection(DbUtil.ConnectionString))
             {
                 dbConnection.Open();
                 using (var transaction = dbConnection.BeginTransaction())
@@ -32,18 +30,18 @@ namespace Inventory_Manager.Utility
                     #region insert core prefix data
                     using (var command = new SQLiteCommand(dbConnection))
                     {
-                        command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_name, prefix_desc) VALUES('COS-', 'Costumes')";
+                        command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_id, prefix_name, prefix_desc) VALUES(1, 'COS-', 'Costumes')";
                         command.ExecuteNonQuery();
                     }
 
                     using (var command = new SQLiteCommand(dbConnection))
                     {
-                        command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_name, prefix_desc) VALUES('PR-', 'Props')";
+                        command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_id, prefix_name, prefix_desc) VALUES(2, 'PR-', 'Props')";
                         command.ExecuteNonQuery();
                     }
                     using (var command = new SQLiteCommand(dbConnection))
                     {
-                        command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_name, prefix_desc) VALUES('SP-', 'Set-Pieces')";
+                        command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_id, prefix_name, prefix_desc) VALUES(3, 'SP-', 'Set-Pieces')";
                         command.ExecuteNonQuery();
                     }
 

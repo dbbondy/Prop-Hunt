@@ -46,6 +46,7 @@
             // 
             // PrefixTxtBox
             // 
+            this.PrefixTxtBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.PrefixTxtBox.Location = new System.Drawing.Point(107, 21);
             this.PrefixTxtBox.MaxLength = 4;
             this.PrefixTxtBox.Name = "PrefixTxtBox";
@@ -80,6 +81,7 @@
             this.AddBtn.TabIndex = 4;
             this.AddBtn.Text = "Add";
             this.AddBtn.UseVisualStyleBackColor = true;
+            this.AddBtn.Click += new System.EventHandler(this.AddBtn_Click);
             // 
             // AddPrefixForm
             // 

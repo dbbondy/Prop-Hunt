@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Inventory_Manager.Domain;
 using System.Data.SQLite;
 using System.Data.Common;
+using Inventory_Manager.Utility;
 
 namespace Inventory_Manager.Repositories
 {
@@ -14,47 +15,51 @@ namespace Inventory_Manager.Repositories
             get
             {
                 // get the connection
-                using (var dbConnection = new SQLiteConnection("Data Source=InventoryDB.sqlite;Version=3;"))
+                using (var dbConnection = new SQLiteConnection(DbUtil.ConnectionString))
                 {
                     dbConnection.Open();
-
-                    using (var transaction = dbConnection.BeginTransaction())
+                    
+                    using (var command = new SQLiteCommand(dbConnection))
                     {
-                        using (var command = new SQLiteCommand(dbConnection))
+                        command.CommandText = "SELECT * from prefix ORDER BY prefix_id ASC;";
+                        using (DbDataReader reader = command.ExecuteReader())
                         {
-                            command.CommandText = "SELECT * from prefix;";
-                            using (DbDataReader reader = command.ExecuteReader())
+                            // get all current prefixes in DB and return them.
+                            List<Prefix> prefixes = new List<Prefix>();
+                            while (reader.Read())
                             {
-                                // get all current prefixes in DB and return them.
-                                List<Prefix> prefixes = new List<Prefix>();
-                                while (reader.Read())
-                                {
-                                    Prefix prefix = mapData(reader);
-                                    prefixes.Add(prefix);
-                                }
-                                return prefixes;
+                                Prefix prefix = mapData(reader);
+                                prefixes.Add(prefix);
                             }
+                            dbConnection.Close();
+                            return prefixes;
                         }
                     }
                 }
             }
         }
 
-        private Prefix mapData(DbDataReader reader)
-        {
-            // map the raw data from DB columns to a meaningful object and return it.
-            int id = Convert.ToInt32(reader["prefix_id"]);
-            string prefix_name = (string)reader["prefix_name"];
-            string prefix_desc = (string)reader["prefix_desc"];
-
-            Prefix prefix = new Prefix { Id = id, Name = prefix_name, Description = prefix_desc };
-
-            return prefix;
-        }
-
         void IRepository<Prefix>.add(Prefix item)
         {
-            throw new NotImplementedException();
+            using (var dbConnection = new SQLiteConnection(DbUtil.ConnectionString)) {
+
+                dbConnection.Open();
+
+                using (var transaction = dbConnection.BeginTransaction()) {
+
+                    using (var command = new SQLiteCommand(dbConnection)) {
+                        string valuesClause = String.Format("'{0}', '{1}'", item.Name, item.Description);
+                        command.CommandText = "INSERT INTO prefix (prefix_name, prefix_desc) VALUES(" + valuesClause + ")";
+
+                        command.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                }
+
+                dbConnection.Close();
+            }
+
         }
 
         void IRepository<Prefix>.delete(Prefix item)
@@ -65,6 +70,45 @@ namespace Inventory_Manager.Repositories
         Prefix IRepository<Prefix>.update(Prefix item)
         {
             throw new NotImplementedException();
+        }
+
+        public bool containsPrefixByName(string name) {
+
+            if (!String.IsNullOrEmpty(name)) {
+                // get the connection
+                using (var dbConnection = new SQLiteConnection(DbUtil.ConnectionString)) {
+                    dbConnection.Open();
+
+                    using (var command = new SQLiteCommand(dbConnection)) {
+                        command.CommandText = "SELECT * from prefix where prefix_name = '" + name + "'";
+                        using (DbDataReader reader = command.ExecuteReader()) {
+                            // get all current prefixes in DB and return them.
+                            List<Prefix> prefixes = new List<Prefix>();
+                            while (reader.Read()) {
+                                //TODO: maybe don't need to map. just check size of reader and return then. debug this and figure it out.
+                                Prefix prefix = mapData(reader);
+                                prefixes.Add(prefix);
+                            }
+                            dbConnection.Close();
+                            return prefixes.Count != 0;
+                        }
+                    }
+                    
+                }
+            } else { // if there is no name to look for, throw an error and fail fast.
+                throw new ArgumentNullException("name", "name is blank. cannot be blank.");
+            }
+
+        }
+        private Prefix mapData(DbDataReader reader) {
+            // map the raw data from DB columns to a meaningful object and return it.
+            int id = Convert.ToInt32(reader["prefix_id"]);
+            string prefix_name = (string)reader["prefix_name"];
+            string prefix_desc = (string)reader["prefix_desc"];
+
+            Prefix prefix = new Prefix { Id = id, Name = prefix_name, Description = prefix_desc };
+
+            return prefix;
         }
     }
 }
