@@ -47,6 +47,7 @@ namespace Inventory_Manager.Forms
 
         private void AddBtn_Click(object sender, EventArgs e) {
             string prefixInput = PrefixTxtBox.Text;
+            prefixInput += "-";
             string descriptionInput = DescriptionTxtBox.Text;
 
             if (!repo.containsPrefixByName(prefixInput)) {
