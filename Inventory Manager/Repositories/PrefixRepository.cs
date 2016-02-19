@@ -49,7 +49,9 @@ namespace Inventory_Manager.Repositories
 
                     using (var command = new SQLiteCommand(dbConnection)) {
                         string valuesClause = String.Format("'{0}', '{1}'", item.Name, item.Description);
-                        command.CommandText = "INSERT INTO prefix (prefix_name, prefix_desc) VALUES(" + valuesClause + ")";
+                        string sql = String.Format("INSERT INTO prefix (prefix_name, prefix_desc) VALUES({0})", valuesClause);
+
+                        command.CommandText = sql;
 
                         command.ExecuteNonQuery();
                     }
@@ -80,7 +82,10 @@ namespace Inventory_Manager.Repositories
                     dbConnection.Open();
 
                     using (var command = new SQLiteCommand(dbConnection)) {
-                        command.CommandText = "SELECT * from prefix where prefix_name = '" + name + "'";
+
+                        string sql = String.Format("SELECT * from prefix where prefix_name = '{0}'", name);
+                        command.CommandText = sql;
+
                         using (DbDataReader reader = command.ExecuteReader()) {
                             // get all current prefixes in DB and return them.
                             List<Prefix> prefixes = new List<Prefix>();
