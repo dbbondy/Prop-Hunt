@@ -32,7 +32,7 @@ namespace Inventory_Manager.Forms
         {
             ListBox lbox = (ListBox) sender;
 
-            Prefix selectedPrefix = (Prefix) lbox.SelectedItem;
+            Prefix selectedPrefix = (Prefix)lbox.SelectedItem;
 
             DescriptionLabel.Text = selectedPrefix.Description;
         }
@@ -51,6 +51,14 @@ namespace Inventory_Manager.Forms
             //TODO: figure out binding newly added item back to list. 
             //TODO: maybe using this? https://msdn.microsoft.com/en-us/library/ms366768.aspx
             //TODO: or this https://msdn.microsoft.com/en-us/library/ms173171.aspx
+        }
+
+        private void deleteBtn_Click(object sender, EventArgs e) {
+            Prefix selectedPrefix = (Prefix)prefixListbox.SelectedItem;
+
+            repo.delete(selectedPrefix);
+
+            loadPrefixes(); // inefficient but works for current version. TODO change this to remove just the single element and re-use the same data.
         }
     }
 }

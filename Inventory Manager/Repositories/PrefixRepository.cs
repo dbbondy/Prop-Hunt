@@ -64,9 +64,23 @@ namespace Inventory_Manager.Repositories
 
         }
 
-        void IRepository<Prefix>.delete(Prefix item)
-        {
-            throw new NotImplementedException();
+        void IRepository<Prefix>.delete(Prefix item) {
+            using (var connection = new SQLiteConnection(DbUtil.ConnectionString)) {
+                connection.Open();
+
+                using (var transaction = connection.BeginTransaction()) {
+
+                    using (var command = new SQLiteCommand(connection)) {
+                        
+                        string sql = String.Format("DELETE FROM prefix WHERE prefix_id = '{0}'", item.Id);
+                        command.CommandText = sql;
+
+                        command.ExecuteNonQuery();
+                    }
+                    transaction.Commit();
+                }
+                connection.Close();
+            }
         }
 
         Prefix IRepository<Prefix>.update(Prefix item)
