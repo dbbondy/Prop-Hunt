@@ -33,6 +33,8 @@
             this.addBtn = new System.Windows.Forms.Button();
             this.deleteBtn = new System.Windows.Forms.Button();
             this.DescriptionLabel = new System.Windows.Forms.Label();
+            this.SearchTxtBox = new System.Windows.Forms.TextBox();
+            this.searchLabel = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,9 +42,9 @@
             // 
             this.prefixListbox.ColumnWidth = 50;
             this.prefixListbox.FormattingEnabled = true;
-            this.prefixListbox.Location = new System.Drawing.Point(100, 32);
+            this.prefixListbox.Location = new System.Drawing.Point(89, 35);
             this.prefixListbox.Name = "prefixListbox";
-            this.prefixListbox.Size = new System.Drawing.Size(78, 147);
+            this.prefixListbox.Size = new System.Drawing.Size(100, 147);
             this.prefixListbox.TabIndex = 0;
             this.prefixListbox.SelectedValueChanged += new System.EventHandler(this.prefixListbox_SelectedValueChanged);
             // 
@@ -78,16 +80,36 @@
             // DescriptionLabel
             // 
             this.DescriptionLabel.AutoSize = true;
-            this.DescriptionLabel.Location = new System.Drawing.Point(118, 192);
+            this.DescriptionLabel.Location = new System.Drawing.Point(106, 192);
             this.DescriptionLabel.Name = "DescriptionLabel";
             this.DescriptionLabel.Size = new System.Drawing.Size(0, 13);
             this.DescriptionLabel.TabIndex = 4;
+            // 
+            // SearchTxtBox
+            // 
+            this.SearchTxtBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.SearchTxtBox.Location = new System.Drawing.Point(89, 9);
+            this.SearchTxtBox.Name = "SearchTxtBox";
+            this.SearchTxtBox.Size = new System.Drawing.Size(100, 20);
+            this.SearchTxtBox.TabIndex = 5;
+            this.SearchTxtBox.TextChanged += new System.EventHandler(this.SearchTxtBox_TextChanged);
+            // 
+            // searchLabel
+            // 
+            this.searchLabel.AutoSize = true;
+            this.searchLabel.Location = new System.Drawing.Point(35, 12);
+            this.searchLabel.Name = "searchLabel";
+            this.searchLabel.Size = new System.Drawing.Size(44, 13);
+            this.searchLabel.TabIndex = 6;
+            this.searchLabel.Text = "Search:";
             // 
             // ConfigurePrefixForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.searchLabel);
+            this.Controls.Add(this.SearchTxtBox);
             this.Controls.Add(this.DescriptionLabel);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.prefixListbox);
@@ -106,5 +128,7 @@
         private System.Windows.Forms.Button addBtn;
         private System.Windows.Forms.Button deleteBtn;
         private System.Windows.Forms.Label DescriptionLabel;
+        private System.Windows.Forms.TextBox SearchTxtBox;
+        private System.Windows.Forms.Label searchLabel;
     }
 }
