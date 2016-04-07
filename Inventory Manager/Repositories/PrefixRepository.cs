@@ -65,21 +65,23 @@ namespace Inventory_Manager.Repositories
         }
 
         void IRepository<Prefix>.delete(Prefix item) {
-            using (var connection = new SQLiteConnection(DbUtil.ConnectionString)) {
-                connection.Open();
+            if(item != null) {
+                using (var connection = new SQLiteConnection(DbUtil.ConnectionString)) {
+                    connection.Open();
 
-                using (var transaction = connection.BeginTransaction()) {
+                    using (var transaction = connection.BeginTransaction()) {
 
-                    using (var command = new SQLiteCommand(connection)) {
-                        
-                        string sql = String.Format("DELETE FROM prefix WHERE prefix_id = '{0}'", item.Id);
-                        command.CommandText = sql;
+                        using (var command = new SQLiteCommand(connection)) {
 
-                        command.ExecuteNonQuery();
+                            string sql = String.Format("DELETE FROM prefix WHERE prefix_id = '{0}'", item.Id);
+                            command.CommandText = sql;
+
+                            command.ExecuteNonQuery();
+                        }
+                        transaction.Commit();
                     }
-                    transaction.Commit();
+                    connection.Close();
                 }
-                connection.Close();
             }
         }
 
@@ -124,8 +126,9 @@ namespace Inventory_Manager.Repositories
             int id = Convert.ToInt32(reader["prefix_id"]);
             string prefix_name = (string)reader["prefix_name"];
             string prefix_desc = (string)reader["prefix_desc"];
+            int protected_prefix = Convert.ToInt32(reader["protected_prefix"]);
 
-            Prefix prefix = new Prefix { Id = id, Name = prefix_name, Description = prefix_desc };
+            Prefix prefix = new Prefix { Id = id, Name = prefix_name, Description = prefix_desc, ProtectedPrefix = protected_prefix };
 
             return prefix;
         }

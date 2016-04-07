@@ -22,7 +22,7 @@ namespace Inventory_Manager.Utility
                     using (var command = new SQLiteCommand(dbConnection))
                     {
                         command.CommandText = "CREATE TABLE IF NOT EXISTS prefix" +
-                                                "(prefix_id INTEGER PRIMARY KEY ASC, prefix_name TEXT, prefix_desc TEXT)";
+                                                "(prefix_id INTEGER PRIMARY KEY ASC, prefix_name TEXT, prefix_desc TEXT, protected_prefix INTEGER DEFAULT 0)";
                         command.ExecuteNonQuery();
                     }
                     #endregion
@@ -30,18 +30,18 @@ namespace Inventory_Manager.Utility
                     #region insert core prefix data
                     using (var command = new SQLiteCommand(dbConnection))
                     {
-                        command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_id, prefix_name, prefix_desc) VALUES(1, 'COS-', 'Costumes')";
+                        command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_id, prefix_name, prefix_desc, protected_prefix) VALUES(1, 'COS-', 'Costumes', 1)";
                         command.ExecuteNonQuery();
                     }
 
                     using (var command = new SQLiteCommand(dbConnection))
                     {
-                        command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_id, prefix_name, prefix_desc) VALUES(2, 'PR-', 'Props')";
+                        command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_id, prefix_name, prefix_desc, protected_prefix) VALUES(2, 'PROP-', 'Props', 1)";
                         command.ExecuteNonQuery();
                     }
                     using (var command = new SQLiteCommand(dbConnection))
                     {
-                        command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_id, prefix_name, prefix_desc) VALUES(3, 'SP-', 'Set-Pieces')";
+                        command.CommandText = "INSERT OR IGNORE INTO prefix (prefix_id, prefix_name, prefix_desc, protected_prefix) VALUES(3, 'SETP-', 'Set-Pieces', 1)";
                         command.ExecuteNonQuery();
                     }
 

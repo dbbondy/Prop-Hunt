@@ -37,6 +37,8 @@ namespace Inventory_Manager.Forms
 
             Prefix selectedPrefix = (Prefix)lbox.SelectedItem;
 
+            deleteBtn.Enabled = selectedPrefix.ProtectedPrefix == 0; 
+
             DescriptionLabel.Text = selectedPrefix.Description;
         }
 
@@ -74,6 +76,7 @@ namespace Inventory_Manager.Forms
             prefixListbox.DisplayMember = "Name";
             prefixListbox.ValueMember = "Id";
 
+            deleteBtn.Enabled = matchedPrefixes.Any();
         }
     }
 }
